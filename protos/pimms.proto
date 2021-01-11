@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package meta
+
+enum Zone {
+    UNKNOWN = 0;
+    BJ = 1;
+    SH = 2;
+    GZ = 3;
+}
+
+enum RuleStatus {
+    ACTIVE = 1;
+    BLOCK = 2;
+    RESHARDING =3;
+}
+
+service pimms {
+    rpc Get() returns () {}
+
+    message Root {
+        uint64 Version = 1;
+    }
+
+    message Zone {
+        Zone ZoneID = 1
+        repeated ZoneShardingID ZSID = 2
+    }
+
+    message ZoneShardingID {
+        uint32 ZSID = 1;
+        RuleStatus Status = 2;
+        Zone ZoneID = 3;
+    }
+    message DB {
+        
+    }
+    // 从 table 的角度描述是因为
+    // 在配置的时候更关心的是一个表是如何划分到不同的 backend 的
+    message DBBackend {
+        string dsn = 1;
+        uint32 maximumPoolSize = 2;
+    }
+
+    message Table {
+        string name = 1;
+        sharding
+        repeated string backend
+}
